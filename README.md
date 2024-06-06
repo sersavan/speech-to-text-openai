@@ -65,3 +65,5 @@ The script converts audio files into text using the OpenAI API. It takes an audi
    python transcribe.py my_audio_file.m4a --sum
    ```
    - The `--sum` flag is optional. If included, a summary of the transcription will be created.
+  
+File uploads are currently limited to 25 MB and the following input file types are supported: mp3, mp4, mpeg, mpga, m4a, wav, and webm.
