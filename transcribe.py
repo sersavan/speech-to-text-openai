@@ -29,9 +29,21 @@ def transcribe_audio(file_path):
         print(f"An error occurred: {e}")
     return transcript
 
-def create_summary(full_transcription):
-    # Replace this with your summary generation code
-    return "Summary of the transcription."
+def create_summary(transcription_text):
+    try:
+        response = client.completions.create(
+            model="text-davinci-003",
+            prompt=f"Summarize the following transcription:\n\n{transcription_text}",
+            max_tokens=150,
+            n=1,
+            stop=None,
+            temperature=0.7,
+        )
+        summary = response.choices[0].text.strip() if response else "Summary generation failed."
+    except Exception as e:
+        print(f"An error occurred while generating the summary: {e}")
+        summary = "Summary generation failed."
+    return summary
 
 def main(speech_file):
     full_transcription = transcribe_audio(speech_file)
@@ -45,7 +57,7 @@ def main(speech_file):
 
 if __name__ == "__main__":
     import argparse
-    parser = argparse.ArgumentParser(description="Transcribe an audio file using OpenAI's Speech-to-Text API, punctiate, roleplay and than create a summary")
+    parser = argparse.ArgumentParser(description="Transcribe an audio file using OpenAI's Speech-to-Text API and create a summary")
     parser.add_argument("path", help="File path for the audio file to be transcribed")
     args = parser.parse_args()
 
