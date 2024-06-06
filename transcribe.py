@@ -30,13 +30,17 @@ def transcribe_audio(file_path):
 
 def main(speech_file):
     full_transcription = transcribe_audio(speech_file)
-
+    summary = create_summary(full_transcription)
+    
     with open("transcription.txt", "w") as file:
         file.write(full_transcription)
+    
+    with open("summary.txt", "w") as file:
+        file.write(summary)
 
 if __name__ == "__main__":
     import argparse
-    parser = argparse.ArgumentParser(description="Transcribe an audio file using OpenAI's Speech-to-Text API")
+    parser = argparse.ArgumentParser(description="Transcribe an audio file using OpenAI's Speech-to-Text API, punctiate and roleplay")
     parser.add_argument("path", help="File path for the audio file to be transcribed")
     args = parser.parse_args()
 
