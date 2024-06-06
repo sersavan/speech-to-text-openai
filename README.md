@@ -21,7 +21,7 @@ The script converts audio files into text using the OpenAI API. It takes an audi
 
 #### How to Get an OpenAI API Key
 
-1. Sign up on the [OpenAI website](https://www.openai.com) and log in.
+1. Sign up on the [OpenAI website](https://platform.openai.com) and log in.
 2. Go to the API keys section in your OpenAI dashboard.
 3. Generate a new API key and copy it.
 
