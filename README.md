@@ -63,7 +63,7 @@ The script converts audio files into text using the OpenAI API. It takes an audi
    ```
    Example:
    ```sh
-   python transcribe.py my_audio_file.m4a --sum --time
+   python transcribe.py my_audio.m4a --sum --time
    ```
 
 ### Optional Parameters
