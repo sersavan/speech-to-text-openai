@@ -45,7 +45,7 @@ def main(speech_file):
 
 if __name__ == "__main__":
     import argparse
-    parser = argparse.ArgumentParser(description="Transcribe an audio file using OpenAI's Speech-to-Text API and create a summary")
+    parser = argparse.ArgumentParser(description="Transcribe an audio file using OpenAI's Speech-to-Text API, punctiate, roleplay and than create a summary")
     parser.add_argument("path", help="File path for the audio file to be transcribed")
     args = parser.parse_args()
 
