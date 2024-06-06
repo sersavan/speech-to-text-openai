@@ -5,33 +5,39 @@ from openai import OpenAI
 
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-def format_timestamp(ms):
-    seconds = ms // 1000
-    minutes = seconds // 60
-    seconds = seconds % 60
-    hours = minutes // 60
-    minutes = minutes % 60
-    return f"{hours:02}:{minutes:02}:{seconds:02}"
-
-def transcribe_audio(file_path):
+def transcribe_audio(file_path, include_timestamps=False):
     transcript = ""
     try:
         file_extension = os.path.splitext(file_path)[-1].replace(".", "").lower()
         audio = AudioSegment.from_file(file_path, format=file_extension)
 
-        chunk_length_ms = 1 * 60 * 1000  # 1 minute in milliseconds
+        max_file_size = 25 * 1024 * 1024  # 25 MB in bytes
+        chunk_length_ms = (max_file_size // (audio.frame_rate * audio.sample_width)) * 1000  # duration in ms
+
         for i in range(0, len(audio), chunk_length_ms):
             chunk = audio[i:i + chunk_length_ms]
             with tempfile.NamedTemporaryFile(suffix='.mp3', delete=False) as temp_file:
                 chunk.export(temp_file.name, format="mp3")
                 with open(temp_file.name, 'rb') as audio_file:
-                    response = client.audio.transcriptions.create(
-                        model="whisper-1",
-                        file=audio_file
-                    )
-                    timestamp = format_timestamp(i)
-                    transcript_chunk = response.text if response else ""
-                    transcript += f"[{timestamp}] {transcript_chunk}\n"
+                    if include_timestamps:
+                        response = client.audio.transcriptions.create(
+                            model="whisper-1",
+                            file=audio_file,
+                            response_format="verbose_json",
+                            timestamp_granularities=["word"]
+                        )
+                        words = response.to_dict()['words']
+                        for word_info in words:
+                            start = word_info['start']
+                            word = word_info['word']
+                            transcript += f"[{start:.2f}] {word} "
+                    else:
+                        response = client.audio.transcriptions.create(
+                            model="whisper-1",
+                            file=audio_file,
+                            response_format="text"
+                        )
+                        transcript += response
             os.remove(temp_file.name)
     except Exception as e:
         print(f"An error occurred: {e}")
@@ -52,8 +58,8 @@ def create_summary(transcription_text):
         summary = "Summary generation failed."
     return summary
 
-def main(speech_file, create_summary_flag):
-    full_transcription = transcribe_audio(speech_file)
+def main(speech_file, create_summary_flag, include_timestamps):
+    full_transcription = transcribe_audio(speech_file, include_timestamps)
     
     if create_summary_flag:
         summary = create_summary(full_transcription)
@@ -65,9 +71,10 @@ def main(speech_file, create_summary_flag):
 
 if __name__ == "__main__":
     import argparse
-    parser = argparse.ArgumentParser(description="Transcribe an audio file using OpenAI's Speech-to-Text API")
+    parser = argparse.ArgumentParser(description="Transcribe an audio file using OpenAI's Speech-to-Text API and optionally create a summary")
     parser.add_argument("path", help="File path for the audio file to be transcribed")
     parser.add_argument("--sum", action="store_true", help="Flag to indicate if a summary should be created")
+    parser.add_argument("--time", action="store_true", help="Flag to indicate if timestamps should be included")
     args = parser.parse_args()
 
-    main(args.path, args.sum)
+    main(args.path, args.sum, args.time)
