@@ -2,7 +2,7 @@
 
 ## Script Description and Setup
 
-The script converts audio files into text using the OpenAI API. It takes an audio file, splits it into parts if it's too long, sends these parts to OpenAI for transcription, and then combines the resulting text into one file. Optionally, it can also create a summary of the transcription.
+The script converts audio files into text using the OpenAI API. It takes an audio file, splits it into parts if it's too long, sends these parts to OpenAI for transcription, and then combines the resulting text into one file. Optionally, it can create a summary of the transcription and include timestamps in the transcription.
 
 ### Step 1: Install Python on Your Computer (if necessary)
 
@@ -13,7 +13,8 @@ The script converts audio files into text using the OpenAI API. It takes an audi
      ```
    - **On Windows**: Download the installer from the [official Python website](https://www.python.org/downloads/windows/), run it, and follow the instructions (make sure to check "Add Python to PATH").
 
-2. **Install Required Libraries**:
+
+3. **Install Required Libraries**:
    - Open Command Prompt (or Terminal) and run:
      ```sh
      pip install pydub openai
@@ -53,17 +54,19 @@ The script converts audio files into text using the OpenAI API. It takes an audi
 
 ### Step 4: Run the Script with the Audio File Path
 
-1. Copy and paste the file named `transcribe.py` on your computer (change the file name if you want).
+1. Copy and past file named `transcribe.py` on Your Computer (change the file name if you want)
 2. Open Command Prompt or Terminal.
 3. Navigate to the directory where your script is located.
 4. Run the command:
    ```sh
-   python your_script_name.py path_to_your_audio_file [--sum]
+   python your_script_name.py path_to_your_audio_file [--sum] [--time]
    ```
    Example:
    ```sh
-   python transcribe.py my_audio_file.m4a --sum
+   python transcribe.py my_audio_file.m4a --sum --time
    ```
-   - The `--sum` flag is optional. If included, a summary of the transcription will be created.
-  
-File uploads are currently limited to 25 MB and the following input file types are supported: mp3, mp4, mpeg, mpga, m4a, wav, and webm.
+
+### Optional Parameters
+
+- `--sum`: Flag to indicate if a summary should be created. If included, the script will generate a summary of the transcription and save it to `summary.txt`.
+- `--time`: Flag to indicate if timestamps should be included in the transcription. If included, the script will add timestamps for each word in the transcription.
