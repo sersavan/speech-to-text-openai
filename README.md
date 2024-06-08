@@ -1,86 +1,77 @@
-#### ⭐ Please, give this repository a ⭐! Your support motivates me to create more! ⭐
+#### ⭐ Support this repository by giving it a ⭐! ⭐
 
-## Script Description and Setup
+## Script Overview
 
-The script converts audio files into text using the OpenAI API. It takes an audio file, splits it into parts if it's too long, sends these parts to OpenAI for transcription, and then combines the resulting text into one file. Optionally, it can also create a summary of the transcription and include timestamps in the transcription.
+The script converts audio files into text using the OpenAI API. It handles audio file splitting, sends parts to OpenAI for transcription, combines the text, and optionally creates summaries and timestamps. Supported file types include `mp3`, `mp4`, `mpeg`, `mpga`, `m4a`, `wav`, and `webm`.
 
-### Step 1: Install Python on Your Computer (if necessary)
+### Step 1: Install Python and Libraries
 
 1. **Install Python**:
-   - **On macOS**: Open Terminal and run:
+   - **macOS**: Open Terminal and run:
      ```sh
      brew install python
      ```
-   - **On Windows**: Download the installer from the [official Python website](https://www.python.org/downloads/windows/), run it, and follow the instructions (make sure to check "Add Python to PATH").
+   - **Windows**: Download and install from [Python website](https://www.python.org/downloads/windows/), check "Add Python to PATH".
 
-2. **Install Required Libraries**:
-   - Open Command Prompt (or Terminal) and run:
-     ```sh
-     pip install pydub openai
-     ```
-   - If you have Python 3 installed and need to use `pip3`, run:
-     ```sh
-     pip3 install pydub openai
-     ```
+2. **Install Libraries**:
+   ```sh
+   pip install pydub openai
+   ```
 
 ### Step 2: Get an OpenAI API Key
 
-1. Sign up on the [OpenAI website](https://platform.openai.com) and log in.
-2. Go to the API keys section in your OpenAI dashboard.
-3. Generate a new API key and copy it.
+1. Sign up and log in at [OpenAI](https://platform.openai.com).
+2. Generate a new API key in your dashboard.
 
-### Step 3: Set the API Key Globally on Your System
+### Step 3: Set API Key
 
-**On macOS:**
+**macOS:**
 1. Open Terminal.
-2. Open your shell profile file (for example, for bash, open `.bash_profile`):
+2. Edit your shell profile:
    ```sh
    nano ~/.bash_profile
    ```
-3. Add the following line:
+3. Add:
    ```sh
    export OPENAI_API_KEY='your_openai_api_key'
    ```
-4. Save the file and close the editor (Ctrl + X, then Y, then Enter).
-5. Apply the changes:
+4. Save and apply changes:
    ```sh
    source ~/.bash_profile
    ```
 
-**On Windows:**
+**Windows:**
 1. Open Command Prompt.
-2. Run the command:
+2. Run:
    ```cmd
    setx OPENAI_API_KEY "your_openai_api_key"
    ```
-3. Restart Command Prompt to use the new environment variable.
+3. Restart Command Prompt.
 
-### Step 4: Run the Script with the Audio File Path
+### Step 4: Run the Script
 
-1. Copy and paste the script named `transcribe.py` to your computer (change the file name if you want).
-2. Open Command Prompt or Terminal.
-3. Navigate to the directory where your script is located.
-4. Run the command:
+1. Save the script as `transcribe.py`.
+2. Open Command Prompt or Terminal, navigate to the script directory.
+3. Run:
    ```sh
-   python your_script_name.py path_to_your_audio_file
+   python transcribe.py path_to_your_audio_file
    ```
-   - If you have Python 3 installed and need to use `python3`, run:
-     ```sh
-     python3 your_script_name.py path_to_your_audio_file
-     ```
-
-   Example:
+   For Python 3, use:
    ```sh
-   python transcribe.py audio.m4a
+   python3 transcribe.py path_to_your_audio_file
    ```
+
+Example:
+```sh
+python transcribe.py audio.m4a
+```
 
 ### Optional Parameters
 
-- `--sum`: Flag to indicate if a summary should be created.
-- `--time`: Flag to indicate if timestamps should be included in the transcription.
+- `--sum`: Create a summary.
+- `--time`: Include timestamps.
 
-Example with optional parameters:
+Example:
 ```sh
 python transcribe.py audio.m4a --sum --time
 ```
-File uploads are currently limited to `25 MB` and the following input file types are supported: `mp3`, `mp4`, `mpeg`, `mpga`, `m4a`, `wav`, and `webm`.
