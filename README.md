@@ -1,4 +1,4 @@
-#### ⭐ Support this repository by giving it a ⭐! ⭐
+#### ⭐ Support this repository by giving it a ⭐
 
 ## Script Overview
 
