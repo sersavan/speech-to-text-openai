@@ -2,7 +2,7 @@
 
 ## Script Overview
 
-The script converts audio files into text using the OpenAI API. It handles audio file splitting, sends parts to OpenAI for transcription, combines the text, and optionally creates summaries and timestamps. Supported file types include `mp3`, `mp4`, `mpeg`, `mpga`, `m4a`, `wav`, and `webm`.
+The script converts speech from audio file to text using the OpenAI API. It handles audio file splitting, sends parts to OpenAI for transcription, combines the text, and optionally creates summaries and timestamps. Supported file types include `mp3`, `mp4`, `mpeg`, `mpga`, `m4a`, `wav`, and `webm`.
 
 ### Step 1: Install Python and Libraries
 
